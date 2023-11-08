@@ -1,9 +1,6 @@
 import CasoDeUso from "../../shared/casoDeUso";
 import dbPrisma from "./dbPrisma";
 
-
-
-
 type Entrada = {
   name: string,
   email: string

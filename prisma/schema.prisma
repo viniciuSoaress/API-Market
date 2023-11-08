@@ -15,5 +15,31 @@ model User {
   name  String
   email String @unique
 
+  products Product[]
+
   @@map("users")
+}
+
+model Category {
+  id String @id @default(uuid())
+  name String
+
+  products Product[]
+
+  @@map("categorys")
+
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String
+  preco Float
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  categoyId String
+  catefory Category @relation(fields: [categoyId], references: [id])
+
+  @@map("products")
 }
