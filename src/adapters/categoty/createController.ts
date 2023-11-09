@@ -3,7 +3,7 @@ import Create from "../../core/category/service/create";
 
 import { z } from "zod";
 
-const Schema = z.object({ name: z.string() })
+const Schema = z.object({ name: z.string().min(4) })
 
 
 export default class CreateController {
@@ -13,16 +13,15 @@ export default class CreateController {
     readonly casoDeUSo: Create
   ) {
     server.post('/category', async ({ body }, res) => {
-      
 
       const valide = Schema.safeParse(body)
+
       if (!valide.success) {
-        res.json({ error: 'error' })
+        return res.json({ error: 'error ao criar cat' })
       }
-      
 
-      await casoDeUSo.executar({name: 'name'})
-
+     const category = await casoDeUSo.executar(valide.data)
+      return res.status(201).json(category)
 
     })
   }
