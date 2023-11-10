@@ -5,6 +5,7 @@ import { prisma } from '../prisma'
 
 export default class DbPrismaProduct implements DbPrisma {
 
+
   readonly dbPrisma = prisma
 
 
@@ -16,14 +17,30 @@ export default class DbPrismaProduct implements DbPrisma {
   }
 
 
-  async get(): Promise<Product[]> {
-    return await this.dbPrisma.product.findMany()
+  async get(email: string): Promise<Product[]> {
+    return await this.dbPrisma.product.findMany({
+      where: {
+        user: {
+          email
+        }
+      },
+      take: 6
+    })
   }
 
-  
+
   async delete(id: string): Promise<void | Product> {
     return await this.dbPrisma.product.delete({
       where: { id }
     })
   }
+
+  async put(id: string, newData: Product): Promise<void> {
+    await this.dbPrisma.product.update({
+      where: { id },
+      data: newData
+    })
+  }
+
+
 }

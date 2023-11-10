@@ -24,6 +24,7 @@ export default class CreateController {
       }
 
       await casoDeUso.executar(valide.data)
+      res.end()
 
     })
   }
